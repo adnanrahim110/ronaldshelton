@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-helvetica: "helvetica";
+  --font-cinzel: "Cinzel Decorative";
+  --font-gentium: "Gentium Book Plus";
+
+  --color-primary: #c58455;
+  --color-primary-50: #faf5f0;
+  --color-primary-100: #f1e2d4;
+  --color-primary-200: #e1c3a6;
+  --color-primary-300: #d1a178;
+  --color-primary-400: #c58455;
+  --color-primary-500: #bc6b44;
+  --color-primary-600: #a5533a;
+  --color-primary-700: #8a3f33;
+  --color-primary-800: #72342e;
+  --color-primary-900: #5e2c29;
+  --color-primary-950: #351513;
+
+  --color-gray-50: #f6f6f6;
+  --color-gray-100: #e7e7e7;
+  --color-gray-200: #d1d1d1;
+  --color-gray-300: #b0b0b0;
+  --color-gray-400: #888888;
+  --color-gray-500: #6d6d6d;
+  --color-gray-600: #5d5d5d;
+  --color-gray-700: #4f4f4f;
+  --color-gray-800: #454545;
+  --color-gray-900: #333333;
+  --color-gray-950: #222222;
+
+  --breakpoint-xl: 1200px;
+  --breakpoint-lg: 992px;
+  --breakpoint-md: 768px;
+  --breakpoint-sm: 576px;
+
+}
+
+@layer base {
+
+  :is(*, *::before, *::after) {
+    @apply box-border transition-all duration-300 ease-in-out;
+  }
+
+  body {
+    @apply text-gray-900 text-base font-normal overflow-x-hidden leading-[1.82em] tracking-normal bg-[#f7f7fa] font-helvetica [-webkit-font-smoothing:antialiased] [font-variant-ligatures:no-common-ligatures];
+  }
+
+  :is(h1, h2, h3, h4, h5, h6) {
+    @apply font-cinzel mb-[0.8em] font-bold leading-[1.4] text-gray-950;
+  }
+
+  h1 {
+    @apply text-[54px];
+  }
+
+  h2 {
+    @apply text-[46px];
+  }
+
+  p {
+    @apply mb-[1.82em];
+  }
+
+  img {
+    @apply max-w-full h-auto border-none outline outline-transparent align-middle
+  }
+}
+
+@layer utilities {
+  .container {
+    @apply relative mx-auto px-[25px] z-[1] max-w-full md:w-[750px] lg:w-[970px] xl:w-[1170px] before:table after:table after:clear-both;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply font-gentium relative inline-flex items-center justify-center gap-3 cursor-pointer text-black text-[17px] font-semibold tracking-wider uppercase text-center bg-transparent transition-all duration-200 border border-gray-950 px-9 py-[15px] rounded-none select-none hover:bg-gray-950 hover:text-white focus:outline-none;
+
+    svg {
+      @apply text-xl transition-all duration-100 ease-in-out;
+    }
+  }
+
+  .btn.btn-main {
+    @apply border-primary bg-primary text-white hover:text-black hover:bg-transparent focus:text-black focus:bg-transparent;
+
+    svg {
+      @apply text-black
+    }
+
+    &:hover svg {
+      @apply text-primary
+    }
+  }
+
+  .btn.btn-2 {
+    @apply border-gray-950 hover:bg-primary hover:border-primary hover:text-white focus:bg-primary focus:text-primary focus:border-white;
+
+    svg {
+      @apply text-primary
+    }
+
+    &:hover svg {
+      @apply text-black
+    }
+  }
+
+  .row {
+    @apply -mx-[25px] flex flex-wrap before:table after:table after:clear-both *:px-[25px] *:relative *:min-h-px *:w-full;
+  }
+
+  .sptitle::first-letter {
+    @apply -mr-[30px] text-[1.9em] text-primary border border-primary p-[0_30px];
+  }
+
+  .chptr_scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .chptr_scroll::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.reviewSlider .swiper-button-prev {
+  left: -35px;
+}
+
+.reviewSlider .swiper-button-next {
+  right: -35px;
+}
+
+.reviewSlider :where(.swiper-button-prev, .swiper-button-next) {
+  color: var(--color-primary) !important;
+
+  &:hover {
+    color: var(--color-primary-600) !important;
+  }
+
+  &::after {
+    font-size: 28px !important;
+  }
+}
