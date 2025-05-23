@@ -2,54 +2,54 @@
   font-family: "helvetica";
   font-style: normal;
   font-weight: 100;
-  src: url(/public/fonts/helvetica/HelveticaNeueUltraLight.otf) format("opentype");
+  src: url(/fonts/helvetica/HelveticaNeueUltraLight.otf) format("opentype");
 }
 
 @font-face {
   font-family: "helvetica";
   font-style: normal;
   font-weight: 200;
-  src: url(/public/fonts/helvetica/HelveticaNeueThin.otf) format("opentype");
+  src: url(/fonts/helvetica/HelveticaNeueThin.otf) format("opentype");
 }
 
 @font-face {
   font-family: "helvetica";
   font-style: normal;
   font-weight: 300;
-  src: url(/public/fonts/helvetica/HelveticaNeueLight.otf) format("opentype");
+  src: url(/fonts/helvetica/HelveticaNeueLight.otf) format("opentype");
 }
 
 @font-face {
   font-family: "helvetica";
   font-style: normal;
   font-weight: 400;
-  src: url(/public/fonts/helvetica/HelveticaNeueRoman.otf) format("opentype");
+  src: url(/fonts/helvetica/HelveticaNeueRoman.otf) format("opentype");
 }
 
 @font-face {
   font-family: "helvetica";
   font-style: normal;
   font-weight: 500;
-  src: url(/public/fonts/helvetica/HelveticaNeueMedium.otf) format("opentype");
+  src: url(/fonts/helvetica/HelveticaNeueMedium.otf) format("opentype");
 }
 
 @font-face {
   font-family: "helvetica";
   font-style: normal;
   font-weight: 700;
-  src: url(/public/fonts/helvetica/HelveticaNeueBold.otf) format("opentype");
+  src: url(/fonts/helvetica/HelveticaNeueBold.otf) format("opentype");
 }
 
 @font-face {
   font-family: "helvetica";
   font-style: normal;
   font-weight: 800;
-  src: url(/public/fonts/helvetica/HelveticaNeueHeavy.otf) format("opentype");
+  src: url(/fonts/helvetica/HelveticaNeueHeavy.otf) format("opentype");
 }
 
 @font-face {
   font-family: "helvetica";
   font-style: normal;
   font-weight: 900;
-  src: url(/public/fonts/helvetica/HelveticaNeueBlack.otf) format("opentype");
+  src: url(/fonts/helvetica/HelveticaNeueBlack.otf) format("opentype");
 }

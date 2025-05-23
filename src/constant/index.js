@@ -1,5 +1,5 @@
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
-import { chapters_1_1 } from "../assets";
+import { book, chapters_1_1 } from "../assets";
 
 export const navigation = [
   { name: "Home", href: "/" },
@@ -12,8 +12,8 @@ export const navigation = [
 export const socials = [
   { name: "facebook", icon: FaFacebookF, color: "#3b5998", href: "https://www.facebook.com/" },
   { name: "instagram", icon: FaInstagram, color: "linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)", href: "https://www.facebook.com/" },
-  { name: "x-twitter", icon: FaXTwitter, color: "#000", href: "https://www.facebook.com/" },
-  { name: "lnkedin", icon: FaLinkedinIn, color: "#0e76a8", href: "https://www.facebook.com/" },
+  { name: "X", icon: FaXTwitter, color: "#000", href: "https://www.facebook.com/" },
+  { name: "linkedIn", icon: FaLinkedinIn, color: "#0e76a8", href: "https://www.facebook.com/" },
 ]
 
 export const reviews = [
@@ -37,6 +37,21 @@ export const reviews = [
     comment: [
       "I simply loved The Bug Out Chronicles by Ron Shelton. There’s really not much else to say, but I need to say something because this is a review. First, I love science fiction. Anything written well which is an intelligent opinion or speculation about future events, I find utterly fascinating. Always have, and probably always will. The Bug Out Chronicles meets both of these stipulations. It is very well written. Not so much in a flowery or poetic sense but in a clear, straightforward manner that keeps the reader engaged. It makes sense and it keeps you reading. I also love books about former military men, probably because I am one. I also like and respect books that send a clear, positive moral message, and The Bug Out Chronicles checks that box too. Finally, who doesn't like a story about family, good neighbors, and good friends? All these qualities are found in this book. It’s an awesome read. I liked and admired John Thompson. He is a talented, skilled, softspoken family man who is taking care of his family in very difficult times. Fall of civilization times. End of the world as we know it times. He is his family’s rock, their anchor in the storm. But he isn't Superman. They are his support system too. His wife and kids are so normal, so American, and so worth saving. This is a story about a world that has fallen apart and a family that has managed to stay together. There is a strong theme of Christianity and doing the right thing. All in all, this is a great book, with a great story. Ron Shelton is my type of writer."
     ]
+  },
+];
+
+export const books = [
+  {
+    id: 'book-001',
+    title: 'The bugout chronicles',
+    img: book,
+    price: 18.99,
+    amzLink: '#',
+    imgRight: false,
+    sku: "364215376135191",
+    text: [
+      `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, perspiciatis. Vel eveniet repudiandae impedit quos totam excepturi explicabo nam, quae, odit eum at provident obcaecati nesciunt nemo eaque atque consequuntur magnam ut consequatur nobis est enim nulla! Amet, officia ipsum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde ad dolorem ab vitae voluptate iusto consequuntur consequatur eum quidem maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, sed inventore. Minus praesentium fugiat enim sunt, sequi dolore? Laborum, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. A sunt voluptatum vero natus suscipit cumque iusto molestias.`
+    ],
   },
 ];
 
@@ -86,4 +101,4 @@ export const bookChapters = [
       }
     ]
   }
-]
+];

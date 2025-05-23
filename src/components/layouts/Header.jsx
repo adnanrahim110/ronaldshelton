@@ -1,5 +1,7 @@
+import { HiOutlineShoppingCart } from "react-icons/hi2";
 import { Link, useLocation } from "react-router-dom";
 import { navigation } from "../../constant";
+import { useCart } from "../../context/CartContext";
 import Button from "../ui/Button";
 
 const RenderLink = ({ item }) => {
@@ -22,35 +24,51 @@ const RenderLink = ({ item }) => {
 };
 
 const Header = () => {
+  const { cart } = useCart();
+  const itemCount = cart.length;
+  const location = useLocation();
+  const showBadge = itemCount > 0 && location.pathname !== "/cart";
+
   return (
-    <header className={`absolute top-0 left-0 w-full z-40 shadow-sm`}>
-      <div className="container">
-        <div className="row">
-          <nav className="flex items-center justify-between h-24">
-            <ul className="flex gap-8 px-3 items-center justify-end">
-              {navigation.slice(0, 3).map((item, index) => (
-                <RenderLink key={index} item={item} />
-              ))}
-            </ul>
-            <div className="lg:w-4/12 w-full">
-              <h1 className="text-center uppercase text-[32px] m-auto">
-                Ronald Shelton
-              </h1>
-            </div>
-            <ul className="flex gap-8 px-3 items-center justify-start">
-              {navigation.slice(3).map((item, index) => (
-                <RenderLink key={index} item={item} />
-              ))}
-              <li>
-                <Button href="/" className="text-[13px] py-2.5 px-4">
-                  Buy now on Amazon
-                </Button>
-              </li>
-            </ul>
-          </nav>
+    <>
+      <header className={`absolute top-0 left-0 w-full z-40 shadow-sm`}>
+        <div className="container">
+          <div className="row">
+            <nav className="flex items-center justify-between h-24">
+              <ul className="flex gap-8 px-3 items-center justify-end">
+                {navigation.slice(0, 3).map((item, index) => (
+                  <RenderLink key={index} item={item} />
+                ))}
+              </ul>
+              <div className="lg:w-4/12 w-full">
+                <h1 className="text-center uppercase text-[32px] m-auto">
+                  Ronald Shelton
+                </h1>
+              </div>
+              <ul className="flex gap-8 px-3 items-center justify-start">
+                {navigation.slice(3).map((item, index) => (
+                  <RenderLink key={index} item={item} />
+                ))}
+                <li>
+                  <Button href="/" className="text-[13px] py-2.5 px-4">
+                    Buy now on Amazon
+                  </Button>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+      {showBadge && (
+        <Link
+          to="/cart"
+          className="fixed z-[999] inline-flex items-center justify-center gap-1.5 right-0 top-1/2 -translate-y-1/2 p-6 text-primary hover:text-primary-600 text-lg bg-white shadow-[0_0_10px_rgba(0,0,0,0.2)]"
+        >
+          <HiOutlineShoppingCart className="text-2xl text-gray-800" />
+          <span>Cart</span> <span>({itemCount})</span>
+        </Link>
+      )}
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 @import "tailwindcss";
 
@@ -6,6 +6,7 @@
   --font-helvetica: "helvetica";
   --font-cinzel: "Cinzel Decorative";
   --font-gentium: "Gentium Book Plus";
+  --font-mulish: "Mulish";
 
   --color-primary: #c58455;
   --color-primary-50: #faf5f0;
@@ -46,7 +47,7 @@
   }
 
   body {
-    @apply text-gray-900 text-base font-normal overflow-x-hidden leading-[1.82em] tracking-normal bg-[#f7f7fa] font-helvetica [-webkit-font-smoothing:antialiased] [font-variant-ligatures:no-common-ligatures];
+    @apply text-gray-900 text-base font-normal overflow-x-hidden leading-[1.82em] tracking-normal bg-[#f7f7fa] font-mulish [-webkit-font-smoothing:antialiased] [font-variant-ligatures:no-common-ligatures];
   }
 
   :is(h1, h2, h3, h4, h5, h6) {
@@ -67,6 +68,26 @@
 
   img {
     @apply max-w-full h-auto border-none outline outline-transparent align-middle
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type=number] {
+    appearance: textfield;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  * ::selection {
+    @apply bg-primary text-white;
+  }
+
+  :is(button, a, input, select, textarea) {
+    @apply outline-none;
   }
 }
 
@@ -98,7 +119,7 @@
   }
 
   .btn.btn-2 {
-    @apply border-gray-950 hover:bg-primary hover:border-primary hover:text-white focus:bg-primary focus:text-primary focus:border-white;
+    @apply border-gray-950 hover:bg-primary hover:border-primary hover:text-white focus:bg-primary focus:text-white focus:border-white disabled:bg-transparent disabled:text-gray-400 disabled:border-primary/60 disabled:**:text-primary/60 disabled:cursor-not-allowed;
 
     svg {
       @apply text-primary
@@ -107,10 +128,14 @@
     &:hover svg {
       @apply text-black
     }
+
+    &:focus svg {
+      @apply text-black
+    }
   }
 
   .row {
-    @apply -mx-[25px] flex flex-wrap before:table after:table after:clear-both *:px-[25px] *:relative *:min-h-px *:w-full;
+    @apply -mx-[25px] flex flex-wrap *:px-[25px] *:relative *:min-h-px *:w-full;
   }
 
   .sptitle::first-letter {
@@ -145,4 +170,17 @@
   &::after {
     font-size: 28px !important;
   }
+}
+
+.chk__control--is-focused {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.chk__option--is-focused {
+  background-color: var(--color-primary-50) !important;
+}
+
+.chk__option--is-selected {
+  background-color: var(--color-primary) !important;
 }
