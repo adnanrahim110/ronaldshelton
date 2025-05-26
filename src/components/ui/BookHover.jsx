@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { FaSpinner } from "react-icons/fa6";
 import { ReadBookContext } from "../../context/ReadBookContext";
 
-const BookHover = ({ price, img }) => {
+const BookHover = ({ price, discountedPrice, img }) => {
   const { openPanel, isLoading } = useContext(ReadBookContext);
   return (
     <div className="inline-block relative after:table after:clear-both">
@@ -30,12 +30,32 @@ const BookHover = ({ price, img }) => {
           />
           <div className="absolute z-[1] bg-white right-0 bottom-[30%] transform p-[35px] lg:p-[25px]">
             <div className="uppercase text-gray-950 text-[40px] font-cinzel max-2xl:text-3xl lg:text-3xl">
-              <span>
-                <span className="text-primary text-[32px] leading-5 px-[5px]">
+              <span
+                className={
+                  discountedPrice
+                    ? "line-through text-gray-400 text-[22px] mr-1.5"
+                    : ""
+                }
+              >
+                <span
+                  className={
+                    discountedPrice
+                      ? ""
+                      : "text-primary text-[32px] leading-5 px-1"
+                  }
+                >
                   $
                 </span>
                 {price}
               </span>
+              {discountedPrice && (
+                <span>
+                  <span className="text-primary text-[32px] leading-5 px-1">
+                    $
+                  </span>
+                  {discountedPrice}
+                </span>
+              )}
             </div>
           </div>
         </button>

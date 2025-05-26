@@ -8,4 +8,21 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  server: {
+    port: 5173,
+    proxy: {
+      "/orders": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
+      "/paypal": {
+        target: "http://127.0.0.1:3000",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+    watch: {
+      ignored: ['**/server/**']
+    }
+  },
 })

@@ -28,7 +28,7 @@ const SelectField = ({
         }
       />
       {errors[field.name] && (
-        <small className="text-red-500 pl-2.5 text-xs font-medium absolute left-0 top-full">
+        <small className="text-red-500 pl-2.5 text-xs font-medium">
           {errors[field.name]}
         </small>
       )}

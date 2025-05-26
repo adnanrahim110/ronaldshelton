@@ -7,7 +7,7 @@ const ElmTitle = ({
   rounded,
 }) => {
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative max-md:mb-4 ${className}`}>
       <span
         className={`absolute bottom-1/5 left-0 right-0 opacity-60 h-[30%] bg-[#ddd] z-0 ${rounded}`}
         style={{
@@ -16,7 +16,9 @@ const ElmTitle = ({
           backgroundSize: "50px 25px",
         }}
       />
-      <h2 className={`${fontsize} px-10 inline-block mb-0 relative z-[1]`}>
+      <h2
+        className={`max-md:text-2xl ${fontsize} px-10 inline-block mb-0 relative z-[1]`}
+      >
         {title}
       </h2>
     </div>

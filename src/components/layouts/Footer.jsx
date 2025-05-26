@@ -12,7 +12,7 @@ const Footer = () => {
       style={{ backgroundImage: `url(${pattern_3})` }}
     >
       <div className="container">
-        <div className="row justify-between before:hidden after:hidden">
+        <div className="row gap-y-10 justify-between before:hidden after:hidden">
           <div className="md:w-4/12">
             <h3 className="text-white sptitle first-letter:p-[0_24px] first-letter:-mr-6 first-letter:border-primary first-letter:text-primary text-3xl">
               ronald shelton
@@ -24,7 +24,7 @@ const Footer = () => {
             </p>
           </div>
           <div className="md:w-2/12">
-            <div className="text-center">
+            <div className="lg:text-center">
               <h5 className="text-white text-xl">Quick Links</h5>
               <ul className="flex flex-col gap-2 uppercase tracking-widest font-gentium">
                 {navigation.slice(1).map((item, index) => (

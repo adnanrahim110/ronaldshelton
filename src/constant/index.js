@@ -1,10 +1,10 @@
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
-import { book, chapters_1_1 } from "../assets";
+import { blogs_1, book, chapters_1_1 } from "../assets";
 
 export const navigation = [
   { name: "Home", href: "/" },
   { name: "Book", href: "/book" },
-  { name: "Author", href: "/author" },
+  { name: "Author", href: "#author" },
   { name: "Blogs", href: "/blogs" },
   { name: "Faq", href: "/faq" },
 ];
@@ -45,10 +45,11 @@ export const books = [
     id: 'book-001',
     title: 'The bugout chronicles',
     img: book,
-    price: 18.99,
+    price: 17.99,
+    discountedPrice: 15.99,
     amzLink: '#',
     imgRight: false,
-    sku: "364215376135191",
+    sku: '364215376135191',
     text: [
       `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, perspiciatis. Vel eveniet repudiandae impedit quos totam excepturi explicabo nam, quae, odit eum at provident obcaecati nesciunt nemo eaque atque consequuntur magnam ut consequatur nobis est enim nulla! Amet, officia ipsum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde ad dolorem ab vitae voluptate iusto consequuntur consequatur eum quidem maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, sed inventore. Minus praesentium fugiat enim sunt, sequi dolore? Laborum, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. A sunt voluptatum vero natus suscipit cumque iusto molestias.`
     ],
@@ -102,3 +103,78 @@ export const bookChapters = [
     ]
   }
 ];
+
+export const blogs = [
+  {
+    title: "A Joyous Mountain Walk",
+    link: "/blogs/a-joyous-mountain-walk",
+    date: "September 12, 2025",
+    category: "Adventure",
+    img: blogs_1,
+    text: [
+      `Galaxies Sea of Tranquility galaxies! Rig Veda a still more glorious dawn awaits dream of the mind’s eye the sky calls to us citizens of distant epochs Euclid, quasar qui dolorem ipsum quia dolor sit amet Flatland colonies, how far away. Stirred by starlight. A billion trillion, another world shores of the cosmic ocean! Decipherment descended from astronomers Euclid Rig Veda, the only home we’ve ever known take root and flourish prime number, hearts of the stars! Vastness is bearable only through love trillion. Hearts of the stars, corpus callosum, brain is the seed of intelligence corpus callosum shores of the cosmic ocean Orion’s sword?`,
+      `<b>If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.</b>`,
+      `Apollonius of Perga two ghostly white figures in coveralls and helmets are soflty dancing, Tunguska event qui dolorem ipsum quia dolor sit amet as a patch of light the sky calls to us with pretty stories for which there’s little good evidence at the edge of forever birth, globular star cluster with pretty stories for which there’s little good evidence descended from astronomers decipherment consectetur venture, Flatland quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident globular star cluster dream of the mind’s eye, brain is the seed of intelligence across the centuries culture, vanquish the impossible consciousness from which we spring. Cosmos Flatland.`
+    ]
+  },
+  {
+    title: "A Joyous Mountain Walk",
+    link: "/blogs/a-joyous-mountain-walk",
+    date: "September 12, 2025",
+    category: "Adventure",
+    img: blogs_1,
+    text: [
+      `Galaxies Sea of Tranquility galaxies! Rig Veda a still more glorious dawn awaits dream of the mind’s eye the sky calls to us citizens of distant epochs Euclid, quasar qui dolorem ipsum quia dolor sit amet Flatland colonies, how far away. Stirred by starlight. A billion trillion, another world shores of the cosmic ocean! Decipherment descended from astronomers Euclid Rig Veda, the only home we’ve ever known take root and flourish prime number, hearts of the stars! Vastness is bearable only through love trillion. Hearts of the stars, corpus callosum, brain is the seed of intelligence corpus callosum shores of the cosmic ocean Orion’s sword?`,
+      `<b>If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.</b>`,
+      `Apollonius of Perga two ghostly white figures in coveralls and helmets are soflty dancing, Tunguska event qui dolorem ipsum quia dolor sit amet as a patch of light the sky calls to us with pretty stories for which there’s little good evidence at the edge of forever birth, globular star cluster with pretty stories for which there’s little good evidence descended from astronomers decipherment consectetur venture, Flatland quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident globular star cluster dream of the mind’s eye, brain is the seed of intelligence across the centuries culture, vanquish the impossible consciousness from which we spring. Cosmos Flatland.`
+    ]
+  },
+  {
+    title: "A Joyous Mountain Walk",
+    link: "/blogs/a-joyous-mountain-walk",
+    date: "September 12, 2025",
+    category: "Adventure",
+    img: blogs_1,
+    text: [
+      `Galaxies Sea of Tranquility galaxies! Rig Veda a still more glorious dawn awaits dream of the mind’s eye the sky calls to us citizens of distant epochs Euclid, quasar qui dolorem ipsum quia dolor sit amet Flatland colonies, how far away. Stirred by starlight. A billion trillion, another world shores of the cosmic ocean! Decipherment descended from astronomers Euclid Rig Veda, the only home we’ve ever known take root and flourish prime number, hearts of the stars! Vastness is bearable only through love trillion. Hearts of the stars, corpus callosum, brain is the seed of intelligence corpus callosum shores of the cosmic ocean Orion’s sword?`,
+      `<b>If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.</b>`,
+      `Apollonius of Perga two ghostly white figures in coveralls and helmets are soflty dancing, Tunguska event qui dolorem ipsum quia dolor sit amet as a patch of light the sky calls to us with pretty stories for which there’s little good evidence at the edge of forever birth, globular star cluster with pretty stories for which there’s little good evidence descended from astronomers decipherment consectetur venture, Flatland quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident globular star cluster dream of the mind’s eye, brain is the seed of intelligence across the centuries culture, vanquish the impossible consciousness from which we spring. Cosmos Flatland.`
+    ]
+  },
+  {
+    title: "A Joyous Mountain Walk",
+    link: "/blogs/a-joyous-mountain-walk",
+    date: "September 12, 2025",
+    category: "Adventure",
+    img: blogs_1,
+    text: [
+      `Galaxies Sea of Tranquility galaxies! Rig Veda a still more glorious dawn awaits dream of the mind’s eye the sky calls to us citizens of distant epochs Euclid, quasar qui dolorem ipsum quia dolor sit amet Flatland colonies, how far away. Stirred by starlight. A billion trillion, another world shores of the cosmic ocean! Decipherment descended from astronomers Euclid Rig Veda, the only home we’ve ever known take root and flourish prime number, hearts of the stars! Vastness is bearable only through love trillion. Hearts of the stars, corpus callosum, brain is the seed of intelligence corpus callosum shores of the cosmic ocean Orion’s sword?`,
+      `<b>If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.</b>`,
+      `Apollonius of Perga two ghostly white figures in coveralls and helmets are soflty dancing, Tunguska event qui dolorem ipsum quia dolor sit amet as a patch of light the sky calls to us with pretty stories for which there’s little good evidence at the edge of forever birth, globular star cluster with pretty stories for which there’s little good evidence descended from astronomers decipherment consectetur venture, Flatland quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident globular star cluster dream of the mind’s eye, brain is the seed of intelligence across the centuries culture, vanquish the impossible consciousness from which we spring. Cosmos Flatland.`
+    ]
+  },
+  {
+    title: "A Joyous Mountain Walk",
+    link: "/blogs/a-joyous-mountain-walk",
+    date: "September 12, 2025",
+    category: "Adventure",
+    img: blogs_1,
+    text: [
+      `Galaxies Sea of Tranquility galaxies! Rig Veda a still more glorious dawn awaits dream of the mind’s eye the sky calls to us citizens of distant epochs Euclid, quasar qui dolorem ipsum quia dolor sit amet Flatland colonies, how far away. Stirred by starlight. A billion trillion, another world shores of the cosmic ocean! Decipherment descended from astronomers Euclid Rig Veda, the only home we’ve ever known take root and flourish prime number, hearts of the stars! Vastness is bearable only through love trillion. Hearts of the stars, corpus callosum, brain is the seed of intelligence corpus callosum shores of the cosmic ocean Orion’s sword?`,
+      `<b>If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.</b>`,
+      `Apollonius of Perga two ghostly white figures in coveralls and helmets are soflty dancing, Tunguska event qui dolorem ipsum quia dolor sit amet as a patch of light the sky calls to us with pretty stories for which there’s little good evidence at the edge of forever birth, globular star cluster with pretty stories for which there’s little good evidence descended from astronomers decipherment consectetur venture, Flatland quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident globular star cluster dream of the mind’s eye, brain is the seed of intelligence across the centuries culture, vanquish the impossible consciousness from which we spring. Cosmos Flatland.`
+    ]
+  },
+  {
+    title: "A Joyous Mountain Walk",
+    link: "/blogs/a-joyous-mountain-walk",
+    date: "September 12, 2025",
+    category: "Adventure",
+    img: blogs_1,
+    text: [
+      `Galaxies Sea of Tranquility galaxies! Rig Veda a still more glorious dawn awaits dream of the mind’s eye the sky calls to us citizens of distant epochs Euclid, quasar qui dolorem ipsum quia dolor sit amet Flatland colonies, how far away. Stirred by starlight. A billion trillion, another world shores of the cosmic ocean! Decipherment descended from astronomers Euclid Rig Veda, the only home we’ve ever known take root and flourish prime number, hearts of the stars! Vastness is bearable only through love trillion. Hearts of the stars, corpus callosum, brain is the seed of intelligence corpus callosum shores of the cosmic ocean Orion’s sword?`,
+      `<b>If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.</b>`,
+      `Apollonius of Perga two ghostly white figures in coveralls and helmets are soflty dancing, Tunguska event qui dolorem ipsum quia dolor sit amet as a patch of light the sky calls to us with pretty stories for which there’s little good evidence at the edge of forever birth, globular star cluster with pretty stories for which there’s little good evidence descended from astronomers decipherment consectetur venture, Flatland quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident globular star cluster dream of the mind’s eye, brain is the seed of intelligence across the centuries culture, vanquish the impossible consciousness from which we spring. Cosmos Flatland.`
+    ]
+  },
+]

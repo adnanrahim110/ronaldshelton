@@ -32,7 +32,10 @@ const Cart = () => {
     discountAmount,
   } = useCart();
 
-  const subtotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const subtotal = cart.reduce(
+    (sum, i) => sum + (i.discountedPrice ?? i.price) * i.quantity,
+    0
+  );
   const total = subtotal - discountAmount;
   const couponDef = appliedCoupon ? coupons[appliedCoupon] : null;
 
@@ -115,9 +118,9 @@ const Cart = () => {
               <div className="container">
                 <div className="row">
                   {cart.length > 0 ? (
-                    <div className="w-full">
+                    <div className="max-md:px-0 w-full">
                       <table className="w-full mb-20 border-separate border-spacing-x-2.5">
-                        <thead>
+                        <thead className="max-lg:hidden">
                           <tr className="text-left relative">
                             {[
                               null,
@@ -149,108 +152,115 @@ const Cart = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {cart.map((item, idx) => (
-                            <tr
-                              key={idx}
-                              className="*:border-b *:border-b-gray-300 *:py-5 *:px-8"
-                            >
-                              <td className="text-center">
-                                <div className="relative inline-block group">
-                                  <button
-                                    onClick={() => {
-                                      removeCoupon();
-                                      removeItem(item.id);
-                                      toast.success(
-                                        "Item removed from cart successfully",
-                                        { autoClose: 3000 }
-                                      );
-                                    }}
-                                    className="text-2xl lg:text-base text-center -indent-[9999px] text-primary block w-4 h-4 mx-auto transition-colors duration-200 ease-in-out hover:text-red-500"
-                                  >
-                                    <RxCross2 />
-                                  </button>
-                                  <div className="pointer-events-none absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                    <div className="bg-red-500 text-white text-xs font-medium rounded py-1 px-2 relative whitespace-nowrap">
-                                      Remove item
-                                      <span className="absolute bottom-[-4px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-red-500" />
+                          {cart.map((item, idx) => {
+                            const price = item.discountedPrice ?? item.price;
+                            return (
+                              <tr
+                                key={idx}
+                                className="*:border-b *:border-b-gray-300 *:px-3 *:py-4 lg:*:py-5 lg:*:px-8 max-md:block"
+                              >
+                                <td className="text-center max-md:flex justify-between items-center">
+                                  <div className="relative inline-block group">
+                                    <button
+                                      onClick={() => {
+                                        removeCoupon();
+                                        removeItem(item.id);
+                                        toast.success(
+                                          "Item removed from cart successfully",
+                                          { autoClose: 3000 }
+                                        );
+                                      }}
+                                      className="text-2xl lg:text-base text-center -indent-[9999px] text-primary block w-4 h-4 mx-auto transition-colors duration-200 ease-in-out hover:text-red-500"
+                                    >
+                                      <RxCross2 />
+                                    </button>
+                                    <div className="pointer-events-none absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                      <div className="bg-red-500 text-white text-xs font-medium rounded py-1 px-2 relative whitespace-nowrap">
+                                        Remove item
+                                        <span className="absolute bottom-[-4px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-red-500" />
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <span className="text-sndry-500 lg:hidden">
-                                  Remove item
-                                </span>
-                              </td>
-                              <td className="px-3!">
-                                <img
-                                  src={item.img}
-                                  className="w-10 min-w-10 h-auto block mx-auto"
-                                  alt={item.title}
-                                />
-                              </td>
-                              <td>
-                                <Link
-                                  to="/book"
-                                  className="text-primary tracking-wider hover:text-primary-600"
-                                >
-                                  {item.title}
-                                </Link>
-                              </td>
-                              <td>
-                                <bdi>
-                                  <span>$</span>
-                                  {item.price.toFixed(2)}
-                                </bdi>
-                              </td>
-                              <td>
-                                <div className="flex justify-center border border-neutral-400 gap-2 h-full">
-                                  <button
-                                    type="button"
-                                    className="inline-flex items-center justify-center p-2 w-full hover:bg-primary-100"
-                                    onClick={() => {
-                                      const newQ = Math.max(
-                                        1,
-                                        item.quantity - 1
-                                      );
-                                      if (newQ !== item.quantity) {
-                                        updateQty(item.id, newQ);
-                                        setHasChanges(true);
-                                      }
-                                    }}
-                                  >
-                                    <FiMinus />
-                                  </button>
-                                  <span className="max-w-10 p-2 font-medium text-center">
-                                    {item.quantity}
+                                  <span className="text-sndry-500 lg:hidden">
+                                    Remove item
                                   </span>
-                                  <button
-                                    type="button"
-                                    className="inline-flex items-center justify-center p-2 w-full hover:bg-primary-100"
-                                    onClick={() => {
-                                      updateQty(item.id, item.quantity + 1);
-                                      setHasChanges(true);
-                                    }}
+                                </td>
+                                <td className="px-3! max-md:hidden">
+                                  <img
+                                    src={item.img}
+                                    className="w-10 min-w-10 h-auto block mx-auto"
+                                    alt={item.title}
+                                  />
+                                </td>
+                                <td className="max-md:flex items-center justify-between">
+                                  <span className="lg:hidden">Product:</span>
+                                  <Link
+                                    to="/book"
+                                    className="text-primary tracking-wider hover:text-primary-600"
                                   >
-                                    <FiPlus />
-                                  </button>
-                                </div>
-                              </td>
-                              <td>
-                                <span>
+                                    {item.title}
+                                  </Link>
+                                </td>
+                                <td className="max-md:flex items-center justify-between">
+                                  <span className="lg:hidden">Price:</span>
                                   <bdi>
                                     <span>$</span>
-                                    {(item.price * item.quantity).toFixed(2)}
+                                    {price.toFixed(2)}
                                   </bdi>
-                                </span>
-                              </td>
-                            </tr>
-                          ))}
+                                </td>
+                                <td className="max-md:flex items-center justify-between">
+                                  <span className="lg:hidden">Quantity:</span>
+                                  <div className="flex justify-center border border-neutral-400 gap-2 h-full">
+                                    <button
+                                      type="button"
+                                      className="inline-flex items-center justify-center p-2 w-full hover:bg-primary-100"
+                                      onClick={() => {
+                                        const newQ = Math.max(
+                                          1,
+                                          item.quantity - 1
+                                        );
+                                        if (newQ !== item.quantity) {
+                                          updateQty(item.id, newQ);
+                                          setHasChanges(true);
+                                        }
+                                      }}
+                                    >
+                                      <FiMinus />
+                                    </button>
+                                    <span className="max-w-10 p-2 font-medium text-center">
+                                      {item.quantity}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      className="inline-flex items-center justify-center p-2 w-full hover:bg-primary-100"
+                                      onClick={() => {
+                                        updateQty(item.id, item.quantity + 1);
+                                        setHasChanges(true);
+                                      }}
+                                    >
+                                      <FiPlus />
+                                    </button>
+                                  </div>
+                                </td>
+                                <td className="max-md:flex items-center justify-between">
+                                  <span className="lg:hidden">Subtotal:</span>
+                                  <span>
+                                    <bdi>
+                                      <span>$</span>
+                                      {subtotal.toFixed(2)}
+                                    </bdi>
+                                  </span>
+                                </td>
+                              </tr>
+                            );
+                          })}
                           <tr>
                             <td
                               colSpan={6}
                               className="border-b border-b-gray-300 py-5"
                             >
-                              <div className="float-left">
-                                <form className="w-full max-w-[27.5rem] relative">
+                              <div className="lg:float-left max-lg:mb-5">
+                                <form className="w-full lg:max-w-[27.5rem] relative">
                                   <div
                                     className={`relative flex items-center border ${
                                       couponError
@@ -286,6 +296,18 @@ const Cart = () => {
                                   )}
                                 </form>
                               </div>
+                              <div className="float-left lg:hidden">
+                                <button
+                                  onClick={() => setShowConfirm(true)}
+                                  aria-label="Empty cart"
+                                  className="border border-red-400 bg-red-50 btn text-sm py-4 px-8 inline-flex justify-center items-center gap-2 text-red-500 hover:text-white hover:bg-red-500 cursor-pointer"
+                                >
+                                  <span>
+                                    <GoTrash />
+                                  </span>
+                                  empty cart
+                                </button>
+                              </div>
                               <div className="float-right">
                                 <Button
                                   disabled={!hasChanges}
@@ -301,7 +323,7 @@ const Cart = () => {
                         </tbody>
                       </table>
                       <div className="w-full">
-                        <div className="float-right lg:w-[48%]">
+                        <div className="lg:float-right lg:w-[48%]">
                           <ElmTitle title="Cart Summary" />
                           <table className="border-separate mb-1.5 border-spacing-x-2.5 w-full text-left">
                             <tbody>

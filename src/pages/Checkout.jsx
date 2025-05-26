@@ -1,16 +1,12 @@
 import { Country, State } from "country-state-city";
-import { useEffect, useState } from "react";
-import { BsFillShieldLockFill } from "react-icons/bs";
-import { RiCoupon3Line } from "react-icons/ri";
-import { TfiAngleDown, TfiAngleUp } from "react-icons/tfi";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import Button from "../components/ui/Button";
-import ElmTitle from "../components/ui/ElmTitle";
-import SelectField from "../components/ui/SelectField";
-import TextField from "../components/ui/TextField";
+import BillingForm from "../components/checkout/BillingForm";
+import DeliveryMethod from "../components/checkout/DeliveryMethod";
+import OrderSummary from "../components/checkout/OrderSummary";
+import Payment from "../components/checkout/Payment";
+import PaymentSuccess from "../components/checkout/PaymentSuccess";
 import coupons from "../constant/coupons";
-import fields from "../constant/fields";
 import { useCart } from "../context/CartContext";
 
 const initialFormData = {
@@ -31,24 +27,38 @@ const Checkout = () => {
     useCart();
 
   const [formData, setFormData] = useState(initialFormData);
+  const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [step]);
+
   const [showPayPal, setShowPayPal] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [orderId, setOrderId] = useState(null);
-  const [showDetails, setShowDetails] = useState(false);
-
-  const navigate = useNavigate();
 
   const [countryOptions, setCountryOptions] = useState([]);
   const [stateOptions, setStateOptions] = useState([]);
+
   const initialOptions = {
     clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
     "disable-funding": "paylater",
   };
 
   const couponDef = appliedCoupon ? coupons[appliedCoupon] : null;
-  const subtotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const subtotal = cart.reduce(
+    (sum, i) => sum + (i.discountedPrice ?? i.price) * i.quantity,
+    0
+  );
   const total = subtotal - discountAmount;
 
   useEffect(() => {
@@ -78,14 +88,24 @@ const Checkout = () => {
     setFormData((fd) => ({ ...fd, state: "" }));
   }, [formData.country]);
 
+  useEffect(() => {
+    const draft = localStorage.getItem("checkoutFormData");
+    if (draft) setFormData(JSON.parse(draft));
+  }, []);
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => {
+      const next = { ...prev, [name]: value };
+      localStorage.setItem("checkoutFormData", JSON.stringify(next));
+      return next;
+    });
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const vErrors = [];
+    const vErrors = {};
     if (!formData.first_name) vErrors.first_name = "First name is required *";
     if (!formData.last_name) vErrors.last_name = "Last name is required *";
     if (!formData.country) vErrors.country = "Country is required *";
@@ -105,6 +125,7 @@ const Checkout = () => {
       return;
     }
 
+    localStorage.setItem("checkoutFormData", JSON.stringify(formData));
     setLoading(true);
     try {
       const resp = await fetch("/orders", {
@@ -129,17 +150,17 @@ const Checkout = () => {
 
       const { orderId: newOrderId } = await resp.json();
       setOrderId(newOrderId);
-
-      setShowPayPal(true);
       removeCoupon();
     } catch (err) {
       console.error("Order creation failed:", err);
       toast.error("An unexpected error occurred.");
     } finally {
-      setLoading(false);
+      setTimeout(() => {
+        setStep(2);
+        setLoading(false);
+      }, 1000);
     }
   };
-
   const onCreateOrder = async () => {
     const resp = await fetch("/paypal/createorder", {
       method: "POST",
@@ -163,11 +184,12 @@ const Checkout = () => {
 
       clearCart();
       setPaymentSuccess(true);
-      showPayPal(false);
+      setShowPayPal(false);
+      localStorage.removeItem("checkoutFormData");
     } catch (error) {
       console.error("Error verifying Paypal order:", error);
       toast.error("Payment verification failed.");
-      showPayPal(false);
+      setShowPayPal(false);
     }
   };
 
@@ -175,228 +197,62 @@ const Checkout = () => {
     console.error("Paypal error", error);
     toast.error("Payment was canceled or failed.");
     showPayPal(false);
+    localStorage.removeItem("checkoutFormData");
   };
 
   return (
     <>
-      <section className="py-[190px_100px]">
+      <section className="py-[100px_100px]">
         <div className="container">
           <div className="row">
             <div className="w-full">
-              <div className="container">
+              <div ref={containerRef} className="container mt-10 pt-16">
                 <div className="row">
-                  <div className="w-full">
-                    <form>
-                      <div className="w-full row">
-                        <div className="lg:w-7/12">
-                          <div className="w-full relative">
-                            <div className="border border-t-0 border-gray-200 bg-white rounded-lg">
-                              <ElmTitle
-                                title="Customer Details"
-                                className="-top-[21px]"
-                                rounded="rounded-lg"
-                                fontsize="text-3xl"
-                              />
-                              <div className="row -mx-3 px-5 pb-5 gap-y-3">
-                                {fields.slice(0, 4).map((field, idx) => (
-                                  <div
-                                    key={idx}
-                                    className={
-                                      field.half
-                                        ? "md:w-1/2 px-3"
-                                        : "w-full px-3"
-                                    }
-                                  >
-                                    {field.select ? (
-                                      <SelectField
-                                        field={field}
-                                        formData={formData}
-                                        errors={errors}
-                                        countryOptions={countryOptions}
-                                        stateOptions={stateOptions}
-                                        onChange={handleChange}
-                                      />
-                                    ) : (
-                                      <TextField
-                                        field={field}
-                                        formData={formData}
-                                        errors={errors}
-                                        onChange={handleChange}
-                                      />
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                            <div className="mt-8 border border-t-0 border-gray-200 bg-white rounded-lg">
-                              <ElmTitle
-                                title="Delivery Details"
-                                className="-top-[21px]"
-                                rounded="rounded-lg"
-                                fontsize="text-3xl"
-                              />
-                              <div className="row -mx-3 px-5 pb-5 gap-y-3">
-                                {fields.slice(4).map((field, idx) => (
-                                  <div
-                                    key={idx}
-                                    className={
-                                      field.half
-                                        ? "md:w-1/2 px-3"
-                                        : "w-full px-3"
-                                    }
-                                  >
-                                    {field.select ? (
-                                      <SelectField
-                                        field={field}
-                                        formData={formData}
-                                        errors={errors}
-                                        countryOptions={countryOptions}
-                                        stateOptions={stateOptions}
-                                        onChange={handleChange}
-                                      />
-                                    ) : (
-                                      <TextField
-                                        field={field}
-                                        formData={formData}
-                                        errors={errors}
-                                        onChange={handleChange}
-                                      />
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                            <div className="mt-2">
-                              <Button className="w-full rounded-lg py-2 bg-black border-black hover:bg-black/80 hover:text-white">
-                                Continue
-                              </Button>
-                            </div>
-                            <div className="py-7 px-2 border-b border-b-gray-200 text-xl text-gray-400">
-                              Delivery Method
-                            </div>
-                            <div className="py-7 px-2 text-xl text-gray-400">
-                              Payment
-                            </div>
-                          </div>
-                        </div>
-                        <div className="lg:w-5/12">
-                          <div className="sticky top-2">
-                            <div className="bg-gray-100 px-6 rounded-lg">
-                              <table className="w-full">
-                                <tbody>
-                                  <tr className="*:border-b *:border-gray-300 *:pt-6 *:pb-4">
-                                    <td>
-                                      <h5 className="mb-0 text-xl">
-                                        Order summary ({cart.length})
-                                      </h5>
-                                    </td>
-                                    <td className="text-right">
-                                      <Link
-                                        to="/cart"
-                                        className="underline underline-offset-2 text-gray-700 hover:text-black"
-                                      >
-                                        Edit Cart
-                                      </Link>
-                                    </td>
-                                  </tr>
-                                  {cart.map((item, idx) => (
-                                    <tr
-                                      key={idx}
-                                      className="*:border-b *:border-gray-300 *:py-5"
-                                    >
-                                      <td>
-                                        <div className="flex gap-3">
-                                          <img
-                                            src={item.img}
-                                            alt={item.title}
-                                            className="max-w-16 h-full"
-                                          />
-                                          <div>
-                                            <div className="text-[17px] font-medium mb-3 text-primary-600 capitalize">
-                                              {item.title}
-                                            </div>
-                                            <div className="text-sm mb-1">
-                                              Qty: {item.quantity}
-                                            </div>
-                                            {showDetails && (
-                                              <div className="text-sm mb-1">
-                                                SKU: {item.sku}
-                                              </div>
-                                            )}
-                                            <button
-                                              type="button"
-                                              onClick={() =>
-                                                setShowDetails(!showDetails)
-                                              }
-                                              className="text-sm text-gray-500 hover:text-black inline-flex items-center gap-1"
-                                            >
-                                              {showDetails
-                                                ? "Less Details"
-                                                : "More Details"}
-                                              {showDetails ? (
-                                                <TfiAngleUp />
-                                              ) : (
-                                                <TfiAngleDown />
-                                              )}
-                                            </button>
-                                          </div>
-                                        </div>
-                                      </td>
-                                      <td className="text-right align-top">
-                                        ${item.price}
-                                      </td>
-                                    </tr>
-                                  ))}
-                                  <tr className="*:border-b *:border-gray-300 *:py-5">
-                                    <td colSpan={2}>
-                                      <div className="flex items-center gap-2">
-                                        <RiCoupon3Line className="text-xl text-primary-600" />
-                                        {appliedCoupon && couponDef ? (
-                                          <>
-                                            <span className="text-gray-500">
-                                              Coupon code applied:{" "}
-                                            </span>
-                                            <span className="text-green-700">
-                                              {appliedCoupon}
-                                            </span>
-                                          </>
-                                        ) : (
-                                          <Link
-                                            className="underline font-medium hover:text-primary-700"
-                                            to="/cart"
-                                          >
-                                            Enter a coupon code
-                                          </Link>
-                                        )}
-                                      </div>
-                                    </td>
-                                  </tr>
-                                  <tr className="*:pt-5">
-                                    <td>Subtotal</td>
-                                    <td className="text-right">${subtotal}</td>
-                                  </tr>
-                                  <tr className="*:pt-5">
-                                    <td>Delivery</td>
-                                    <td className="text-right">$8.50</td>
-                                  </tr>
-                                  <tr className="*:pb-5 *:pt-2.5 *:border-b *:border-gray-300">
-                                    <td>Sales Tax</td>
-                                    <td className="text-right">$0.00</td>
-                                  </tr>
-                                  <tr className="*:py-5 *:text-xl *:font-medium">
-                                    <td>Total</td>
-                                    <td className="text-right">${total}</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            <p className="mb-0 text-center flex text-black font-medium mt-2 items-center justify-center gap-2">
-                              <BsFillShieldLockFill /> Secure Checkout
-                            </p>
-                          </div>
+                  <div className="w-full max-md:px-0">
+                    <div className="w-full max-lg:mx-0 max-lg:*:px-0 row">
+                      <div className="w-full lg:w-7/12">
+                        <div className="w-full relative">
+                          <BillingForm
+                            loading={loading}
+                            formData={formData}
+                            errors={errors}
+                            countryOptions={countryOptions}
+                            stateOptions={stateOptions}
+                            handleChange={handleChange}
+                            handleSubmit={handleSubmit}
+                            step={step}
+                            setStep={setStep}
+                          />
+                          <DeliveryMethod
+                            loading={loading}
+                            step={step}
+                            setStep={setStep}
+                            setShowPayPal={setShowPayPal}
+                            setLoading={setLoading}
+                          />
+                          <Payment
+                            step={step}
+                            showPayPal={showPayPal}
+                            initialOptions={initialOptions}
+                            onApprove={onApprove}
+                            onError={onError}
+                            onCreateOrder={onCreateOrder}
+                          />
                         </div>
                       </div>
-                    </form>
+                      <div className="mt-10 lg:mt-0 w-full lg:w-5/12">
+                        <OrderSummary
+                          cart={cart}
+                          subtotal={subtotal}
+                          total={total}
+                          discountAmount={discountAmount}
+                          appliedCoupon={appliedCoupon}
+                          couponDef={couponDef}
+                          showDetails={showDetails}
+                          setShowDetails={setShowDetails}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -404,6 +260,8 @@ const Checkout = () => {
           </div>
         </div>
       </section>
+
+      {paymentSuccess && <PaymentSuccess />}
     </>
   );
 };

@@ -68,11 +68,15 @@ const BookDetails = ({ book }) => {
   return (
     <div className="w-full">
       <div className="relative">
-        <div className="relative float-left w-[35%] mb-[2em]">
-          <BookHover price={book.price} img={book.img} />
+        <div className="relative lg:float-left lg:w-[35%] mb-[2em]">
+          <BookHover
+            price={book.price}
+            discountedPrice={book.discountedPrice}
+            img={book.img}
+          />
         </div>
-        <div className="float-right w-[65%] pl-[210px] max-2xl:pl-[140px]">
-          <SecTitle title={book.title} className="mb-[60px]" />
+        <div className="lg:float-right lg:w-[65%] lg:pl-[210px] pl-0 2xl:pl-[140px] max-lg:text-center">
+          <SecTitle title={book.title} className="lg:mb-[60px]" />
           <div className="relative mb-[60px]">
             {book.text.map((t, idx) => (
               <p key={idx} dangerouslySetInnerHTML={{ __html: t }} />
@@ -80,7 +84,7 @@ const BookDetails = ({ book }) => {
           </div>
           <form className="mb-5">
             <div>
-              <div className="flex items-center gap-2.5 h-[50px]">
+              <div className="flex flex-wrap items-center gap-2.5 h-[50px]">
                 <div className="flex justify-center border border-neutral-400 has-disabled:cursor-not-allowed has-disabled:border-gray-200 has-disabled:text-gray-400 gap-2 h-full">
                   <button
                     type="button"

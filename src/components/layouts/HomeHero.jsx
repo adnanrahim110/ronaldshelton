@@ -13,11 +13,12 @@ const HomeHero = () => {
   return (
     <section className="py-[196px_100px] relative">
       <div className="container">
-        <div className="row items-center">
-          <div className="md:w-1/2 text-left">
+        <div className="row items-center flex-col-reverse md:flex-row">
+          <div className="md:w-1/2 text-center lg:text-left mt-10 lg:mt-0">
             <SecTitle
               title="The Bug Out Chronicles"
               tagline="EXODUS & EXILES"
+              className="mb-5 lg:mb-[60px]"
             />
             <div className="clear-both overflow-hidden">
               <p>
@@ -36,8 +37,11 @@ const HomeHero = () => {
             </div>
             <div className="h-5" />
             <div className="flex gap-2.5 mt-3.5 items-center">
-              <Button href="/book">Buy now</Button>
+              <Button href="/book" className="max-md:text-sm">
+                Buy now
+              </Button>
               <Button
+                className="max-md:text-sm"
                 btn2
                 icon={isLoading ? FaSpinner : LuBookOpenText}
                 iconClass={
@@ -58,7 +62,11 @@ const HomeHero = () => {
               ></div>
             </div>
             <div className="text-center relative">
-              <BookHover price={books[0].price} img={books[0].img} />
+              <BookHover
+                price={books[0].price}
+                discountedPrice={books[0].discountedPrice}
+                img={books[0].img}
+              />
             </div>
           </div>
         </div>

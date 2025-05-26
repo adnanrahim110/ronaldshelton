@@ -16,7 +16,7 @@ const Reviews = () => {
         <div className="row">
           <div className="max-w-full text-center">
             <SecTitle title="Reviews" tagline="what people are saying" />
-            <div className="px-9 relative overflow-hidden">
+            <div className="lg:px-9 relative overflow-hidden">
               <Swiper
                 modules={[Navigation]}
                 spaceBetween={20}
